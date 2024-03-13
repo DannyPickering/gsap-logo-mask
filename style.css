@@ -1,0 +1,143 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  --color-darkGreen: rgba(11, 64, 33, 1);
+  --color-offWhite: rgba(253, 245, 234, 1);
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0;
+  padding: 0;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+
+#hero {
+  background-color: var(--color-darkGreen);
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  position: relative;
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.mask-group {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.img-container {
+  max-width: 1200px;
+  aspect-ratio: 1200 / 718;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+}
+
+.img-box {
+  width: 100%;
+  border-radius: 10px 10px 10px 114px;
+  box-shadow: 0 0 39px 0px rgba(11, 64, 33, 0.31);
+  /* opacity: 0;
+  visibility: hidden; */
+}
+
+.logo-bg {
+  max-width: 82px;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.logo-inner-container {
+  clip-path: url(#img-mask);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  aspect-ratio: 1200 / 718;
+  z-index: 2;
+  max-width: 82px;
+  overflow: visible;
+  min-height: 93px;
+
+}
+
+.logo-svg {
+  z-index: 2;
+  margin: 0 auto;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text-group {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.text-group h1,
+.text-group .outline,
+.logo-txt-masked {
+  font-size: 120px;
+  font-family: sans-serif;
+  color: #fff;
+  -webkit-text-stroke-width: 2px;
+  text-transform: uppercase;
+  line-height: 0.9;
+}
+
+.logo-txt-masked {
+  clip-path: url(#img-mask);
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(0.1)
+}
+
+.text-group .outline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  color: transparent;
+  -webkit-text-stroke-color: #fff;
+}
