@@ -70,9 +70,9 @@ gsap.set(imgBox, {
   autoAlpha: 0
 })
 
-gsap.set(logoBG, {
-  autoAlpha: 0
-})
+// gsap.set(logoBG, {
+//   autoAlpha: 0
+// })
 
 heroTL.addLabel('start')
   .to([logoMask, logoColor], {
@@ -84,16 +84,14 @@ heroTL.addLabel('start')
     duration: 6
   }, 'start+=1.5')
 
-  .addLabel('startImgFade', 2)
-
   .to(logoBG, {
     autoAlpha: 1,
     duration: 0.25
-  }, 'startImgFade')
+  }, 'start+=1.5')
   .to(logoColorPaths, {
     autoAlpha: 0,
     duration: 0.75
-  }, 'startImgFade')
+  }, 'start+=1.5')
 
   .addLabel('startImgBox', 3)
 
