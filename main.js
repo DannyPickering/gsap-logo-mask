@@ -1,97 +1,72 @@
 import './style.css'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all';
+import Lenis from '@studio-freight/lenis'
 
+gsap.registerPlugin(ScrollTrigger);
 
+const lenis = new Lenis()
 
-const logoMask = document.querySelector('.logo-mask')
-const logoColor = document.querySelector('.logo-color')
-const logoColorPaths = logoColor.querySelectorAll('path')
-const imgBox = document.querySelector('.img-box')
-const logoBG = document.querySelector('.logo-bg')
-const logoInner = document.querySelector('.logo-inner-container')
-
-
-function stopLogoBGScale() {
-  gsap.set(logoBG, {
-    autoAlpha: 0
-  })
-
-  gsap.set(logoColorPaths, {
-    autoAlpha: 0.4,
-    fill: 'rgb(11, 64, 33)'
-  })
-
-  gsap.to('#hero', {
-    backgroundColor: 'rgba(253, 245, 234, 1)',
-    duration: 0.75
-  })
-  gsap.to(logoColorPaths, {
-    autoAlpha: 0,
-    duration: 2
-
-  })
-
-  gsap.to(imgBox, {
-    autoAlpha: 1,
-    duration: 0.5
-  })
-}
-
-let isCallbackExecuted = false
-
-const heroTL = new gsap.timeline({
-  onUpdate: () => {
-
-    if (isCallbackExecuted) {
-      return
-    }
-
-    const scale = gsap.getProperty(logoInner, 'scaleX')
-    const currentWidth = logoInner.offsetWidth * scale
-
-    const scaleY = gsap.getProperty(logoInner, 'scaleY')
-    const currentHeight = logoInner.offsetHeight * scaleY
-
-
-    if (Math.abs(currentHeight - imgBox.offsetHeight > 0)) {
-      stopLogoBGScale()
-    }
-
-    if (Math.abs(currentWidth - imgBox.offsetWidth > 0)) {
-      // console.log(currentWidth)
-      console.log('test')
-      stopLogoBGScale()
-      isCallbackExecuted = true
-    }
-  }
-});
-
-gsap.set(imgBox, {
-  autoAlpha: 0
+lenis.on('scroll', (e) => {
+  // console.log(e)
 })
 
-// gsap.set(logoBG, {
-//   autoAlpha: 0
-// })
+lenis.on('scroll', ScrollTrigger.update)
 
-heroTL.addLabel('start')
-  .to([logoMask, logoColor], {
-    scale: 50,
-    duration: 6
-  }, 'start+=1.5')
-  .to(logoInner, {
-    scale: 50,
-    duration: 6
-  }, 'start+=1.5')
+gsap.ticker.add((time) => {
+  lenis.raf(time * 1000)
+})
 
-  .to(logoBG, {
-    autoAlpha: 1,
-    duration: 0.25
-  }, 'start+=1.5')
-  .to(logoColorPaths, {
+gsap.ticker.lagSmoothing(0)
+
+
+const topLayer = document.querySelector('.top-layer');
+const logoFill = document.querySelector('.logo-fill');
+
+const scrollHero = new gsap.timeline({
+  scrollTrigger: {
+    trigger: '#hero',
+    pin: true,
+    start: '0 top',
+    end: 'bottom',
+    toggleActions: 'play reverse play reverse',
+    markers: true,
+    scrub: true,
+    onUpdate: (self) => {
+      const topLayerScale = gsap.getProperty(topLayer, 'scale');
+      const isScaled = topLayerScale !== 1;
+      const direction = self.direction;
+      isScaled ? fadeTL.play() : fadeTL.reverse();
+
+      // console.log(gsap.getProperty(topLayer, 'scale'))
+      topLayerScale >= 6 && direction === 1 ? gsap.set('#hero', { backgroundColor: 'transparent' }) : '';
+
+      topLayerScale <= 6 && direction === -1 ? gsap.set('#hero', { backgroundColor: '#0b4021' }) : '';
+    }
+  },
+
+});
+
+
+gsap.set(topLayer, { transformOrigin: "50% 50%" });
+
+scrollHero
+  .addLabel('start')
+  .to(topLayer, {
+    scale: 20,
+  }, 'start')
+
+const fadeTL = gsap.timeline({ paused: true });
+
+fadeTL
+  .addLabel('start')
+  .to(logoFill, {
     autoAlpha: 0,
-    duration: 0.75
-  }, 'start+=1.5')
+    duration: 1.2
+  }, 'start')
 
-  .addLabel('startImgBox', 3)
-
+function updateFade() {
+  const isScaled = gsap.getProperty(topLayer, 'scale') !== 1;
+  gsap.set('#hero', { backgroundColor: 'transparent' })
+  isScaled ? fadeTL.play() : fadeTL.reverse();
+}
