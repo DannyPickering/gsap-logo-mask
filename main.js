@@ -43,7 +43,7 @@ const scrollHero = new gsap.timeline({
 
       topLayerScale <= 6 && direction === -1 ? gsap.set('#hero', { backgroundColor: '#0b4021' }) : '';
     }
-  },
+  }
 
 });
 
