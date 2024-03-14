@@ -39,7 +39,7 @@ const scrollHero = new gsap.timeline({
       isScaled ? fadeTL.play() : fadeTL.reverse();
 
       // console.log(gsap.getProperty(topLayer, 'scale'))
-      topLayerScale >= 6 && direction === 1 ? gsap.set('#hero', { backgroundColor: 'transparent' }) : '';
+      topLayerScale >= 6 && direction === 1 ? gsap.set('#hero', { backgroundColor: '#fdf5ea' }) : '';
 
       topLayerScale <= 6 && direction === -1 ? gsap.set('#hero', { backgroundColor: '#0b4021' }) : '';
     }
@@ -64,9 +64,3 @@ fadeTL
     autoAlpha: 0,
     duration: 1.2
   }, 'start')
-
-function updateFade() {
-  const isScaled = gsap.getProperty(topLayer, 'scale') !== 1;
-  gsap.set('#hero', { backgroundColor: 'transparent' })
-  isScaled ? fadeTL.play() : fadeTL.reverse();
-}
